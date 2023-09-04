@@ -13,15 +13,13 @@ export async function generateMetadata({ params: { id } }: PropsType): Promise<M
   };
 }
 
-async function getData(id) {
+async function getData(id: any) {
   const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
   return response.json();
 }
 
 export default async function Post({ params: { id } }: PropsType) {
   const post = await getData(id);
-
-  console.log(post);
 
   return (
     <>
