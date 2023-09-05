@@ -1,38 +1,28 @@
+'use client';
+
 import { Metadata } from 'next';
-import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { getAllPosts } from '@/helpers/getPosts';
+import Items, { PostType } from '@/components/Items';
 
 export const metadata: Metadata = {
-  title: 'Posts | Blog',
+  title: 'Items | Blog',
 };
 
-async function getData() {
-  const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+export default function Posts() {
+  const [posts, setPosts] = useState<PostType[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  if (!response.ok) throw new Error('Unable to fetch posts!');
-
-  return response.json();
-}
-
-export default async function Posts() {
-  const posts = await getData();
+  useEffect(() => {
+    getAllPosts()
+      .then((res) => setPosts(res))
+      .finally(() => setIsLoading(false));
+  }, []);
 
   return (
     <>
       <h1>Posts</h1>
-      <ul>
-        {posts.map((post: PostType) => (
-          <li key={post.id}>
-            <Link href={`/posts/${post.id}`}>{post.title}</Link>
-          </li>
-        ))}
-      </ul>
+      {isLoading ? <h3>Loading...</h3> : <Items posts={posts} />}
     </>
   );
 }
-
-type PostType = {
-  userId: number;
-  id: number;
-  title: string;
-  body: string;
-};
