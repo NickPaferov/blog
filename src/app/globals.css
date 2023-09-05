@@ -63,6 +63,22 @@ main a:hover {
   cursor: default;
 }
 
+form {
+  display: flex;
+  justify-content: center;
+}
+
+form button {
+  background-color: var(--color-active);
+  cursor: pointer;
+  color: white;
+  border: none;
+}
+
+input[type='search'] {
+  padding: 0.5rem 1rem;
+}
+
 footer {
   text-align: center;
 }
