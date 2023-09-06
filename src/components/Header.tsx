@@ -2,7 +2,7 @@ import Navigation from '@/components/Navigation';
 
 const navItems = [
   { label: 'Home', href: '/' },
-  { label: 'Items', href: '/posts' },
+  { label: 'Posts', href: '/posts' },
   { label: 'About', href: '/about' },
 ];
 

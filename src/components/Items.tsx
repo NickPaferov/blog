@@ -1,11 +1,23 @@
+'use client';
+
 import Link from 'next/link';
+import { useEffect } from 'react';
+import { PostType, usePosts } from '@/store';
+import { shallow } from 'zustand/shallow';
 
-type PropsType = {
-  posts: PostType[];
-};
+export default function Items() {
+  const [posts, isLoading, fetchAllPosts] = usePosts<any>(
+    (state) => [state.posts, state.isLoading, state.fetchAllPosts],
+    shallow,
+  );
 
-export default function Items({ posts }: PropsType) {
-  return (
+  useEffect(() => {
+    fetchAllPosts();
+  }, []);
+
+  return isLoading ? (
+    <h3>Loading...</h3>
+  ) : (
     <ul>
       {posts.map((post: PostType) => (
         <li key={post.id}>
@@ -15,10 +27,3 @@ export default function Items({ posts }: PropsType) {
     </ul>
   );
 }
-
-export type PostType = {
-  userId: number;
-  id: number;
-  title: string;
-  body: string;
-};
